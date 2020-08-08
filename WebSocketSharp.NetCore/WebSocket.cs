@@ -2085,31 +2085,50 @@ namespace WebSocketSharp.NetCore
             }
         }
 
-        private void sendAsync(Opcode opcode, Stream stream, Action<bool> completed)
+        private Task sendAsync(Opcode opcode, Stream stream, Action<bool> completed)
         {
             Func<Opcode, Stream, bool> sender = send;
-            sender.BeginInvoke(
-                opcode,
-                stream,
-                ar =>
+            // sender.BeginInvoke(
+            //     opcode,
+            //     stream,
+            //     ar =>
+            //     {
+            //         try
+            //         {
+            //             var sent = sender.EndInvoke(ar);
+            //             completed?.Invoke(sent);
+            //         }
+            //         catch (Exception ex)
+            //         {
+            //             _logger.Error(ex.ToString());
+            //             error(
+            //                 "An error has occurred during the callback for an async send.",
+            //                 ex
+            //             );
+            //         }
+            //     },
+            //     null
+            // );
+
+            // Schedule the work using a Task and _message.Invoke instead of _message.BeginInvoke.
+            // https://devblogs.microsoft.com/dotnet/migrating-delegate-begininvoke-calls-for-net-core/
+            // https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
+            return Task.Run(() => { sender.Invoke(opcode, stream); })
+                .ContinueWith((callback) =>
                 {
                     try
                     {
-                        var sent = sender.EndInvoke(ar);
-                        if (completed != null)
-                            completed(sent);
+                        var taskAwaiter = callback.ConfigureAwait(false).GetAwaiter();
+                        var taskComplete = taskAwaiter.IsCompleted;
+                        if (taskComplete)
+                            taskAwaiter.OnCompleted(() => { completed.Invoke(true); });
                     }
                     catch (Exception ex)
                     {
                         _logger.Error(ex.ToString());
-                        error(
-                            "An error has occurred during the callback for an async send.",
-                            ex
-                        );
+                        error("An error has occurred during the callback for an async send.", ex);
                     }
-                },
-                null
-            );
+                });
         }
 
         private bool sendBytes(byte[] bytes)
