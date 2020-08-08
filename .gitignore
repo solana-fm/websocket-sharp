@@ -1,5 +1,6 @@
 ## Ignore build results and temporary files.
 
+*.idea*
 *.DS_Store*
 Backup*
 _UpgradeReport_Files
