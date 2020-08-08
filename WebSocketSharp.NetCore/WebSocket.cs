@@ -1552,6 +1552,7 @@ namespace WebSocketSharp.NetCore
       
       // Schedule the work using a Task and _message.Invoke instead of _message.BeginInvoke.
       // https://devblogs.microsoft.com/dotnet/migrating-delegate-begininvoke-calls-for-net-core/
+      // https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
       Task.Run(() => // Begin
       {
         _message.Invoke(e);
@@ -3272,7 +3273,7 @@ namespace WebSocketSharp.NetCore
     ///   A series of reconnecting has failed.
     ///   </para>
     /// </exception>
-    public void ConnectAsync ()
+    public Task ConnectAsync ()
     {
       if (!_client) {
         var msg = "This instance is not a client.";
@@ -3290,13 +3291,24 @@ namespace WebSocketSharp.NetCore
       }
 
       Func<bool> connector = connect;
-      connector.BeginInvoke (
-        ar => {
-          if (connector.EndInvoke (ar))
-            open ();
-        },
-        null
-      );
+      // connector.BeginInvoke (
+      //   ar => {
+      //     if (connector.EndInvoke (ar))
+      //       open ();
+      //   },
+      //   null
+      // );
+      
+      return Task.Run(() => // Begin
+      {
+        connector.Invoke(); // Invoke the connection
+      }).ContinueWith(callback => // Callback
+      {
+        // TODO: How do we make this truly asynchronous?
+        var task = callback.ConfigureAwait(false); // Do not configure the task asynchronously
+        if (task.GetAwaiter().IsCompleted) // Used to be: if (connector.EndInvoke(callback))
+          open();
+      }, TaskScheduler.Default);
     }
 
     /// <summary>
