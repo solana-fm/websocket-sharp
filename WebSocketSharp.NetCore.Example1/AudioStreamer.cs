@@ -1,13 +1,11 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using WebSocketSharp;
+using Newtonsoft.Json.Linq;
 
-namespace Example1
+namespace WebSocketSharp.NetCore.Example1
 {
   internal class AudioStreamer : IDisposable
   {

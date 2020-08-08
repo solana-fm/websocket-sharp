@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using WebSocketSharp;
 
-namespace Example1
+namespace WebSocketSharp.NetCore.Example1
 {
   internal class BinaryMessage
   {

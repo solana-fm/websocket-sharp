@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace Example1
+namespace WebSocketSharp.NetCore.Example1
 {
   public class Program
   {

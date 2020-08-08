@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Example1
+namespace WebSocketSharp.NetCore.Example1
 {
   internal class Notifier : IDisposable
   {

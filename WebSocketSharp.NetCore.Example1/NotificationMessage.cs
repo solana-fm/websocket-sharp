@@ -1,6 +1,6 @@
 using System;
 
-namespace Example1
+namespace WebSocketSharp.NetCore.Example1
 {
   internal class NotificationMessage
   {
