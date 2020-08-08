@@ -1,12 +1,10 @@
 using System;
-using System.Configuration;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using WebSocketSharp;
-using WebSocketSharp.Net;
-using WebSocketSharp.Server;
+using Microsoft.Extensions.Configuration;
+using WebSocketSharp.NetCore.Net;
+using WebSocketSharp.NetCore.Server;
 
-namespace Example3
+namespace WebSocketSharp.NetCore.Example3
 {
   public class Program
   {
@@ -81,8 +79,11 @@ namespace Example3
       // To resolve to wait for socket in TIME_WAIT state.
       //httpsv.ReuseAddress = true;
 
+      var appConfig = new ConfigurationBuilder().AddXmlFile("App.config", false, 
+        true).Build();
+      
       // Set the document root path.
-      httpsv.DocumentRootPath = ConfigurationManager.AppSettings["DocumentRootPath"];
+      httpsv.DocumentRootPath = appConfig["DocumentRootPath"];
 
       // Set the HTTP GET request event.
       httpsv.OnGet += (sender, e) => {

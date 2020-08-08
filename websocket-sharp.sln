@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example3", "Example3\Example3.csproj", "{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketSharp.NetCore", "WebSocketSharp.NetCore\WebSocketSharp.NetCore.csproj", "{C763D900-12F9-4264-BB2B-D591AEBD8064}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{E15CB7D3-1999-4894-9FA6-FB3A43DF408D}"
@@ -13,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketSharp.NetCore.Exam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketSharp.NetCore.Example2", "WebSocketSharp.NetCore.Example2\WebSocketSharp.NetCore.Example2.csproj", "{A46C2B43-269B-490A-BB4E-D399B566781D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketSharp.NetCore.Example3", "WebSocketSharp.NetCore.Example3\WebSocketSharp.NetCore.Example3.csproj", "{2EF91520-866C-48A1-BAFB-227790D05876}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,14 +21,6 @@ Global
 		Release_Ubuntu|Any CPU = Release_Ubuntu|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}.Debug_Ubuntu|Any CPU.ActiveCfg = Debug_Ubuntu|Any CPU
-		{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}.Debug_Ubuntu|Any CPU.Build.0 = Debug_Ubuntu|Any CPU
-		{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}.Release_Ubuntu|Any CPU.ActiveCfg = Release_Ubuntu|Any CPU
-		{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}.Release_Ubuntu|Any CPU.Build.0 = Release_Ubuntu|Any CPU
-		{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C648BA25-77E5-4A40-A97F-D0AA37B9FB26}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C763D900-12F9-4264-BB2B-D591AEBD8064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C763D900-12F9-4264-BB2B-D591AEBD8064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C763D900-12F9-4264-BB2B-D591AEBD8064}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,6 +53,14 @@ Global
 		{A46C2B43-269B-490A-BB4E-D399B566781D}.Debug_Ubuntu|Any CPU.Build.0 = Debug|Any CPU
 		{A46C2B43-269B-490A-BB4E-D399B566781D}.Release_Ubuntu|Any CPU.ActiveCfg = Debug|Any CPU
 		{A46C2B43-269B-490A-BB4E-D399B566781D}.Release_Ubuntu|Any CPU.Build.0 = Debug|Any CPU
+		{2EF91520-866C-48A1-BAFB-227790D05876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF91520-866C-48A1-BAFB-227790D05876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EF91520-866C-48A1-BAFB-227790D05876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EF91520-866C-48A1-BAFB-227790D05876}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EF91520-866C-48A1-BAFB-227790D05876}.Debug_Ubuntu|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF91520-866C-48A1-BAFB-227790D05876}.Debug_Ubuntu|Any CPU.Build.0 = Debug|Any CPU
+		{2EF91520-866C-48A1-BAFB-227790D05876}.Release_Ubuntu|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EF91520-866C-48A1-BAFB-227790D05876}.Release_Ubuntu|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = websocket-sharp\websocket-sharp.csproj
@@ -77,5 +77,6 @@ Global
 		{DDDB113F-961B-4CF6-92DD-3248B9C90A3D} = {E15CB7D3-1999-4894-9FA6-FB3A43DF408D}
 		{ECA794BC-B432-499F-8D7E-3E7381B55313} = {E15CB7D3-1999-4894-9FA6-FB3A43DF408D}
 		{A46C2B43-269B-490A-BB4E-D399B566781D} = {E15CB7D3-1999-4894-9FA6-FB3A43DF408D}
+		{2EF91520-866C-48A1-BAFB-227790D05876} = {E15CB7D3-1999-4894-9FA6-FB3A43DF408D}
 	EndGlobalSection
 EndGlobal
