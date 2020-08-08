@@ -724,14 +724,14 @@ namespace WebSocketSharp.NetCore.Server
     ///   <paramref name="reason"/> could not be UTF-8-encoded.
     ///   </para>
     /// </exception>
-    protected void CloseAsync (ushort code, string reason)
+    protected void CloseAsync(ushort code, string reason)
     {
       if (_websocket == null) {
         var msg = "The session has not started yet.";
         throw new InvalidOperationException (msg);
       }
 
-      _websocket.CloseAsync (code, reason);
+      _websocket.CloseAsync(code, reason);
     }
 
     /// <summary>
