@@ -63,9 +63,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Notifier.cs" />
-    <Compile Include="NotificationMessage.cs" />
   </ItemGroup>
 </Project>
