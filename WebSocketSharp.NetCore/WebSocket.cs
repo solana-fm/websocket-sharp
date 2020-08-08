@@ -48,6 +48,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using WebSocketSharp.NetCore.Net;
 using WebSocketSharp.NetCore.Net.WebSockets;
 
@@ -1527,7 +1528,7 @@ namespace WebSocketSharp.NetCore
       ThreadPool.QueueUserWorkItem (state => messages (e));
     }
 
-    private void open ()
+    private void open()
     {
       _inMessage = true;
       startReceiving ();
@@ -1548,8 +1549,17 @@ namespace WebSocketSharp.NetCore
 
         e = _messageEventQueue.Dequeue ();
       }
-
-      _message.BeginInvoke (e, ar => _message.EndInvoke (ar), null);
+      
+      // Schedule the work using a Task and _message.Invoke instead of _message.BeginInvoke.
+      // https://devblogs.microsoft.com/dotnet/migrating-delegate-begininvoke-calls-for-net-core/
+      Task.Run(() => // Begin
+      {
+        _message.Invoke(e);
+      }).ContinueWith((ar) => // Callback
+      {
+        var task = ar.ConfigureAwait(false); // Do not configure the task asynchronously
+        task.GetAwaiter().GetResult();
+      }, TaskScheduler.Default);
     }
 
     private bool ping (byte[] data)
