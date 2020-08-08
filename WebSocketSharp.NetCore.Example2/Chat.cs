@@ -1,9 +1,8 @@
 using System;
 using System.Threading;
-using WebSocketSharp;
-using WebSocketSharp.Server;
+using WebSocketSharp.NetCore.Server;
 
-namespace Example2
+namespace WebSocketSharp.NetCore.Example2
 {
   public class Chat : WebSocketBehavior
   {

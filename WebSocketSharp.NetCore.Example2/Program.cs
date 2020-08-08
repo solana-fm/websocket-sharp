@@ -1,11 +1,7 @@
 using System;
-using System.Configuration;
-using System.Security.Cryptography.X509Certificates;
-using WebSocketSharp;
-using WebSocketSharp.Net;
-using WebSocketSharp.Server;
+using WebSocketSharp.NetCore.Server;
 
-namespace Example2
+namespace WebSocketSharp.NetCore.Example2
 {
   public class Program
   {
