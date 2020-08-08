@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,10 +8,9 @@
         <Authors>sta, nozomi-ai</Authors>
         <Copyright>sta</Copyright>
         <PackageProjectUrl>https://github.com/nozomi-ai/websocket-sharp</PackageProjectUrl>
-        <PackageLicenseUrl>https://github.com/sta/websocket-sharp/blob/master/LICENSE.txt</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/nozomi-ai/websocket-sharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>websocket</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
-
 </Project>
