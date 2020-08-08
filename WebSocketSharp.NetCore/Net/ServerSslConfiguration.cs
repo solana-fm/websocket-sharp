@@ -63,7 +63,7 @@ namespace WebSocketSharp.NetCore.Net
     /// </summary>
     public ServerSslConfiguration ()
     {
-      _enabledSslProtocols = SslProtocols.Default;
+      _enabledSslProtocols = SslProtocols.None;
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ namespace WebSocketSharp.NetCore.Net
     public ServerSslConfiguration (X509Certificate2 serverCertificate)
     {
       _serverCert = serverCertificate;
-      _enabledSslProtocols = SslProtocols.Default;
+      _enabledSslProtocols = SslProtocols.None;
     }
 
     /// <summary>
