@@ -1680,6 +1680,13 @@ namespace WebSocketSharp.NetCore
                 }
             }
         }
+        
+        private Task pingAsync (byte[] data, Action<bool> completed)
+        {
+            if (_readyState == WebSocketState.Open) 
+                return sendAsync(Opcode.Ping, new MemoryStream(data), completed);
+            throw new InvalidOperationException ("The current state of the connection is not Open.");
+        }
 
         private bool processCloseFrame(WebSocketFrame frame)
         {
@@ -1687,6 +1694,18 @@ namespace WebSocketSharp.NetCore
             close(payload, !payload.HasReservedCode, false, true);
 
             return false;
+        }
+        
+        /// <summary>
+        /// Sends a ping using the WebSocket connection.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the send has done with no error and a pong has been
+        /// received within a time; otherwise, <c>false</c>.
+        /// </returns>
+        public Task PingAsync (Action<bool> completed)
+        {
+            return pingAsync(EmptyBytes, completed);
         }
 
         // As client
