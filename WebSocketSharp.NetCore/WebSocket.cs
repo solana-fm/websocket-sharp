@@ -4419,7 +4419,7 @@ namespace WebSocketSharp.NetCore
         /// </remarks>
         void IDisposable.Dispose()
         {
-            close(1001, String.Empty);
+            close(1001, string.Empty);
         }
 
         #endregion
