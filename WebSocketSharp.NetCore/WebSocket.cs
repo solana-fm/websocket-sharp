@@ -1214,16 +1214,14 @@ namespace WebSocketSharp.NetCore
         {
             lock (_forState)
             {
-                if (_readyState == WebSocketState.Closing)
+                switch (_readyState)
                 {
-                    _logger.Info("The closing is already in progress.");
-                    return;
-                }
-
-                if (_readyState == WebSocketState.Closed)
-                {
-                    _logger.Info("The connection has already been closed.");
-                    return;
+                    case WebSocketState.Closing:
+                        _logger.Info("The closing is already in progress.");
+                        return;
+                    case WebSocketState.Closed:
+                        _logger.Info("The connection has already been closed.");
+                        return;
                 }
 
                 send = send && _readyState == WebSocketState.Open;
@@ -1290,11 +1288,6 @@ namespace WebSocketSharp.NetCore
             return Task.Run(() => // Begin
                 {
                     closer.Invoke(payloadData, send, receive, received);
-                })
-                .ContinueWith((callback) =>
-                {
-                    var task = callback.ConfigureAwait(false); // Do not configure the task asynchronously
-                    task.GetAwaiter().GetResult();
                 });
         }
 
