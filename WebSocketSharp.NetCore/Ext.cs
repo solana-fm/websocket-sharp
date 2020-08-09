@@ -806,51 +806,51 @@ namespace WebSocketSharp.NetCore
       var offset = 0;
       var retry = 0;
 
-      AsyncCallback callback = null;
-      callback =
-        ar => {
-          try {
-            var nread = stream.EndRead (ar);
-            if (nread <= 0) {
-              if (retry < _retry) {
-                retry++;
-                stream.BeginRead (buff, offset, length, callback, null);
-
-                return;
-              }
-
-              if (completed != null)
-                completed (buff.SubArray (0, offset));
+      void Callback(IAsyncResult ar)
+      {
+        try
+        {
+          var nread = stream.EndRead(ar);
+          if (nread <= 0)
+          {
+            if (retry < _retry)
+            {
+              retry++;
+              stream.BeginRead(buff, offset, length, Callback!, null);
 
               return;
             }
 
-            if (nread == length) {
-              if (completed != null)
-                completed (buff);
+            completed?.Invoke(buff.SubArray(0, offset));
 
-              return;
-            }
-
-            retry = 0;
-
-            offset += nread;
-            length -= nread;
-
-            stream.BeginRead (buff, offset, length, callback, null);
+            return;
           }
-          catch (Exception ex) {
-            if (error != null)
-              error (ex);
+
+          if (nread == length)
+          {
+            completed?.Invoke(buff);
+            return;
           }
-        };
+
+          retry = 0;
+
+          offset += nread;
+          length -= nread;
+
+          stream.BeginRead(buff, offset, length, Callback!, null);
+        }
+        catch (Exception ex)
+        {
+          error?.Invoke(ex);
+        }
+      }
 
       try {
-        stream.BeginRead (buff, offset, length, callback, null);
+        stream.BeginRead(buff, offset, length, Callback, null);
       }
-      catch (Exception ex) {
-        if (error != null)
-          error (ex);
+      catch (Exception ex)
+      {
+        error?.Invoke(ex);
       }
     }
 
