@@ -2529,35 +2529,28 @@ namespace WebSocketSharp.NetCore
         {
             lock (_forState)
             {
-                if (_readyState == WebSocketState.Closing)
+                switch (_readyState)
                 {
-                    _logger.Info("The closing is already in progress.");
-                    return;
+                    case WebSocketState.Closing:
+                        _logger.Info("The closing is already in progress.");
+                        return;
+                    case WebSocketState.Closed:
+                        _logger.Info("The connection has already been closed.");
+                        return;
+                    default:
+                        _readyState = WebSocketState.Closing;
+                        break;
                 }
-
-                if (_readyState == WebSocketState.Closed)
-                {
-                    _logger.Info("The connection has already been closed.");
-                    return;
-                }
-
-                _readyState = WebSocketState.Closing;
             }
 
             _logger.Trace("Begin closing the connection.");
 
             var sent = frameAsBytes != null && sendBytes(frameAsBytes);
-            var received = sent && _receivingExited != null
-                ? _receivingExited.WaitOne(_waitTime)
-                : false;
+            var received = sent && _receivingExited != null && _receivingExited.WaitOne(_waitTime);
 
             var res = sent && received;
 
-            _logger.Debug(
-                String.Format(
-                    "Was clean?: {0}\n  sent: {1}\n  received: {2}", res, sent, received
-                )
-            );
+            _logger.Debug($"Was clean?: {res}\n  sent: {sent}\n  received: {received}");
 
             releaseServerResources();
             releaseCommonResources();
