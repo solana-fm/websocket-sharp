@@ -4154,7 +4154,7 @@ namespace WebSocketSharp.NetCore
             }
 
             if (cookie == null)
-                throw new ArgumentNullException("cookie");
+                throw new ArgumentNullException(nameof(cookie));
 
             if (!canSet(out msg))
             {
@@ -4234,7 +4234,7 @@ namespace WebSocketSharp.NetCore
                 if (username.Contains(':') || !username.IsText())
                 {
                     msg = "It contains an invalid character.";
-                    throw new ArgumentException(msg, "username");
+                    throw new ArgumentException(msg, nameof(username));
                 }
             }
 
@@ -4243,7 +4243,7 @@ namespace WebSocketSharp.NetCore
                 if (!password.IsText())
                 {
                     msg = "It contains an invalid character.";
-                    throw new ArgumentException(msg, "password");
+                    throw new ArgumentException(msg, nameof(password));
                 }
             }
 
