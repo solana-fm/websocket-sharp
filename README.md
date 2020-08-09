@@ -695,3 +695,4 @@ websocket-sharp is provided under [The MIT License].
 [rfc2617]: http://tools.ietf.org/html/rfc2617
 [rfc6455]: http://tools.ietf.org/html/rfc6455
 [rfc6455_ja]: http://www.hcn.zaq.ne.jp/___/WEB/RFC6455-ja.html
+[develop]: https://github.com/nozomi-ai/websocket-sharp/tree/develop
