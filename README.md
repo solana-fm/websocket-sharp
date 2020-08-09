@@ -1,6 +1,6 @@
 ![Logo](websocket-sharp_logo.png)
 
-## Welcome to websocket-sharp! ##
+## Welcome to WebSocketSharp.NetCore! ##
 
 websocket-sharp supports:
 
@@ -11,37 +11,24 @@ websocket-sharp supports:
 - [HTTP Authentication](#http-authentication)
 - [Query string, Origin header, and Cookies](#query-string-origin-header-and-cookies)
 - [Connecting through the HTTP proxy server](#connecting-through-the-http-proxy-server)
-- .NET Framework **3.5** or later (includes compatible environment such as [Mono])
+- .NET Core **2.0** or later (includes compatible environment such as [Mono])
 
 ## Branches ##
 
 - [master] for production releases.
-- [hybi-00] for older [draft-ietf-hybi-thewebsocketprotocol-00]. No longer maintained.
-- [draft75] for even more old [draft-hixie-thewebsocketprotocol-75]. No longer maintained.
-
-## Build ##
-
-websocket-sharp is built as a single assembly, **websocket-sharp.dll**.
-
-websocket-sharp is developed with [MonoDevelop]. So a simple way to build is to open **websocket-sharp.sln** and run build for **websocket-sharp project** with any of the build configurations (e.g. `Debug`) in MonoDevelop.
-
-## Install ##
-
-### Self Build ###
-
-You should add your websocket-sharp.dll (e.g. `/path/to/websocket-sharp/bin/Debug/websocket-sharp.dll`) to the library references of your project.
-
-If you would like to use that dll in your [Unity] project, you should add it to any folder of your project (e.g. `Assets/Plugins`) in the **Unity Editor**.
+- Refer to sta's fork for .NET-based support.
 
 ### NuGet Gallery ###
 
-websocket-sharp is available on the [NuGet Gallery], as still a **prerelease** version.
+WebSocketSharp.NetCore is available on the [NuGet Gallery], as still a **prerelease** version.
 
-- [NuGet Gallery: websocket-sharp]
+- [NuGet Gallery: WebSocketSharp.NetCore]
 
-You can add websocket-sharp to your project with the NuGet Package Manager, by using the following command in the Package Manager Console.
+You can add WebSocketSharp.NetCore to your project with the NuGet Package Manager, by using the following command in the Package Manager Console.
 
-    PM> Install-Package WebSocketSharp -Pre
+    PM> Install-Package WebSocketSharp.NetCore -Pre
+
+# Anything below here is not updated yet.
 
 ### Unity Asset Store ###
 
