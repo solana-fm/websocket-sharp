@@ -4366,19 +4366,19 @@ namespace WebSocketSharp.NetCore
                 if (!Uri.TryCreate(url, UriKind.Absolute, out uri))
                 {
                     msg = "Not an absolute URI string.";
-                    throw new ArgumentException(msg, "url");
+                    throw new ArgumentException(msg, nameof(url));
                 }
 
                 if (uri.Scheme != "http")
                 {
                     msg = "The scheme part is not http.";
-                    throw new ArgumentException(msg, "url");
+                    throw new ArgumentException(msg, nameof(url));
                 }
 
                 if (uri.Segments.Length > 1)
                 {
                     msg = "It includes the path segments.";
-                    throw new ArgumentException(msg, "url");
+                    throw new ArgumentException(msg, nameof(url));
                 }
             }
 
@@ -4387,7 +4387,7 @@ namespace WebSocketSharp.NetCore
                 if (username.Contains(':') || !username.IsText())
                 {
                     msg = "It contains an invalid character.";
-                    throw new ArgumentException(msg, "username");
+                    throw new ArgumentException(msg, nameof(username));
                 }
             }
 
@@ -4396,7 +4396,7 @@ namespace WebSocketSharp.NetCore
                 if (!password.IsText())
                 {
                     msg = "It contains an invalid character.";
-                    throw new ArgumentException(msg, "password");
+                    throw new ArgumentException(msg, nameof(password));
                 }
             }
 
@@ -4427,9 +4427,7 @@ namespace WebSocketSharp.NetCore
                     ? new NetworkCredential(
                         username,
                         password,
-                        String.Format(
-                            "{0}:{1}", _uri.DnsSafeHost, _uri.Port
-                        )
+                        $"{_uri.DnsSafeHost}:{_uri.Port}"
                     )
                     : null;
             }
