@@ -2736,7 +2736,7 @@ namespace WebSocketSharp.NetCore
         ///   The connection has already been closed.
         ///   </para>
         /// </exception>
-        public void AcceptAsync()
+        public Task AcceptAsync()
         {
             if (_client)
             {
@@ -2757,14 +2757,19 @@ namespace WebSocketSharp.NetCore
             }
 
             Func<bool> acceptor = accept;
-            acceptor.BeginInvoke(
-                ar =>
-                {
-                    if (acceptor.EndInvoke(ar))
-                        open();
-                },
-                null
-            );
+            // acceptor.BeginInvoke(
+            //     ar =>
+            //     {
+            //         if (acceptor.EndInvoke(ar))
+            //             open();
+            //     },
+            //     null
+            // );
+            return Task.Run(() => { acceptor.Invoke(); }).ContinueWith((callback) =>
+            {
+                if (callback.IsCompleted)
+                    open();
+            }, TaskScheduler.Default);
         }
 
         /// <summary>
