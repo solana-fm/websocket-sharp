@@ -55,6 +55,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebSocketSharp.NetCore.Net;
 using WebSocketSharp.NetCore.Net.WebSockets;
+using WebSocketSharp.NetCore.Net.WebSockets.Exceptions;
 
 namespace WebSocketSharp.NetCore
 {
@@ -1199,27 +1200,24 @@ namespace WebSocketSharp.NetCore
             }
         }
 
-        private void closeAsync(ushort code, string reason)
+        private Task closeAsync(ushort code, string reason)
         {
             switch (_readyState)
             {
                 case WebSocketState.Closing:
-                    _logger.Info("The closing is already in progress.");
-                    return;
+                    _logger.Info("Socket closure already in progress.");
+                    throw new WebSocketAlreadyClosingException();
                 case WebSocketState.Closed:
                     _logger.Info("The connection has already been closed.");
-                    return;
+                    throw new WebSocketAlreadyClosedException();
             }
 
             if (code == 1005)
-            {
                 // == no status
-                closeAsync(PayloadData.Empty, true, true, false);
-                return;
-            }
+                return closeAsync(PayloadData.Empty, true, true, false);
 
             var send = !code.IsReserved();
-            closeAsync(new PayloadData(code, reason), send, send, false);
+            return closeAsync(new PayloadData(code, reason), send, send, false);
         }
 
         private Task closeAsync(
@@ -3106,9 +3104,9 @@ namespace WebSocketSharp.NetCore
         ///   Closing or Closed.
         ///   </para>
         /// </remarks>
-        public void CloseAsync()
+        public Task CloseAsync()
         {
-            closeAsync(1005, String.Empty);
+            return closeAsync(1005, String.Empty);
         }
 
         /// <summary>
