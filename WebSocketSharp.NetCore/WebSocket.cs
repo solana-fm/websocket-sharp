@@ -1693,17 +1693,7 @@ namespace WebSocketSharp.NetCore
                 e = _messageEventQueue.Dequeue();
             }
 
-            // Schedule the work using a Task and _message.Invoke instead of _message.BeginInvoke.
-            // https://devblogs.microsoft.com/dotnet/migrating-delegate-begininvoke-calls-for-net-core/
-            // https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
-            Task.Run(() => // Begin
-            {
-                _message.Invoke(e);
-            }).ContinueWith((ar) => // Callback
-            {
-                var task = ar.ConfigureAwait(false); // Do not configure the task asynchronously
-                task.GetAwaiter().GetResult();
-            }, TaskScheduler.Default);
+            _message.Invoke(e);
         }
 
         private bool ping(byte[] data)
