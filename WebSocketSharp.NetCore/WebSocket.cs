@@ -1186,11 +1186,15 @@ namespace WebSocketSharp.NetCore
             {
                 case WebSocketState.Closing:
                     _logger.Info("The closing is already in progress.");
-                    throw new WebSocketAlreadyClosingException();
+                    if (_enableStrictExceptions)
+                        throw new WebSocketAlreadyClosingException();
+                    return;
                     return;
                 case WebSocketState.Closed:
                     _logger.Info("The connection has already been closed.");
-                    throw new WebSocketAlreadyClosedException();
+                    if (_enableStrictExceptions)
+                        throw new WebSocketAlreadyClosedException();
+                    return;
             }
 
             if (code == 1005)
@@ -1256,10 +1260,14 @@ namespace WebSocketSharp.NetCore
             {
                 case WebSocketState.Closing:
                     _logger.Info("Socket closure already in progress.");
-                    throw new WebSocketAlreadyClosingException();
+                    if (_enableStrictExceptions)
+                        throw new WebSocketAlreadyClosingException();
+                    return Task.FromResult(false);
                 case WebSocketState.Closed:
                     _logger.Info("The connection has already been closed.");
-                    throw new WebSocketAlreadyClosedException();
+                    if (_enableStrictExceptions)
+                        throw new WebSocketAlreadyClosedException();
+                    return Task.FromResult(false);
             }
 
             if (code == 1005)
