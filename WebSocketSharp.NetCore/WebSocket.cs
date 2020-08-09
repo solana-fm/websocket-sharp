@@ -1681,7 +1681,7 @@ namespace WebSocketSharp.NetCore
             }
         }
         
-        private Task pingAsync (byte[] data, Action<bool> completed)
+        private Task pingAsync(byte[] data, Action<bool> completed)
         {
             if (_readyState == WebSocketState.Open) 
                 return sendAsync(Opcode.Ping, new MemoryStream(data), completed);
@@ -1703,7 +1703,7 @@ namespace WebSocketSharp.NetCore
         /// <c>true</c> if the send has done with no error and a pong has been
         /// received within a time; otherwise, <c>false</c>.
         /// </returns>
-        public Task PingAsync (Action<bool> completed)
+        public Task PingAsync(Action<bool> completed)
         {
             return pingAsync(EmptyBytes, completed);
         }
