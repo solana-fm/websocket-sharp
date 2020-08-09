@@ -2120,8 +2120,7 @@ namespace WebSocketSharp.NetCore
                     {
                         var taskAwaiter = callback.ConfigureAwait(false).GetAwaiter();
                         var taskComplete = taskAwaiter.IsCompleted;
-                        if (taskComplete)
-                            taskAwaiter.OnCompleted(() => { completed.Invoke(true); });
+                        taskAwaiter.OnCompleted(() => { completed?.Invoke(taskComplete); });
                     }
                     catch (Exception ex)
                     {
