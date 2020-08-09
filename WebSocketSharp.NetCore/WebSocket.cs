@@ -2172,13 +2172,12 @@ namespace WebSocketSharp.NetCore
             // https://devblogs.microsoft.com/dotnet/migrating-delegate-begininvoke-calls-for-net-core/
             // https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
             return Task.Run(() => { sender.Invoke(opcode, stream); })
-                .ContinueWith((callback) =>
+                .ContinueWith(task =>
                 {
                     try
                     {
-                        var taskAwaiter = callback.ConfigureAwait(false).GetAwaiter();
-                        var taskComplete = taskAwaiter.IsCompleted;
-                        taskAwaiter.OnCompleted(() => { completed?.Invoke(taskComplete); });
+                        if (task.IsCompletedSuccessfully)
+                            completed.Invoke(true);
                     }
                     catch (Exception ex)
                     {
