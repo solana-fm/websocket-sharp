@@ -16,7 +16,7 @@ websocket-sharp supports:
 ## Branches ##
 
 - [develop] for canary releases
-~- [master] for production releases.~
+- ~[master] for production releases.~
 - Refer to sta's fork for .NET-based support.
 
 ### NuGet Gallery ###
