@@ -4082,7 +4082,7 @@ namespace WebSocketSharp.NetCore
         ///   No data could be read from <paramref name="stream"/>.
         ///   </para>
         /// </exception>
-        public void SendAsync(Stream stream, int length, Action<bool> completed)
+        public Task SendAsync(Stream stream, int length, Action<bool> completed)
         {
             if (_readyState != WebSocketState.Open)
             {
@@ -4091,18 +4091,18 @@ namespace WebSocketSharp.NetCore
             }
 
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             if (!stream.CanRead)
             {
                 var msg = "It cannot be read.";
-                throw new ArgumentException(msg, "stream");
+                throw new ArgumentException(msg, nameof(stream));
             }
 
             if (length < 1)
             {
                 var msg = "Less than 1.";
-                throw new ArgumentException(msg, "length");
+                throw new ArgumentException(msg, nameof(length));
             }
 
             var bytes = stream.ReadBytes(length);
@@ -4111,20 +4111,16 @@ namespace WebSocketSharp.NetCore
             if (len == 0)
             {
                 var msg = "No data could be read from it.";
-                throw new ArgumentException(msg, "stream");
+                throw new ArgumentException(msg, nameof(stream));
             }
 
             if (len < length)
             {
-                _logger.Warn(
-                    String.Format(
-                        "Only {0} byte(s) of data could be read from the stream.",
-                        len
-                    )
+                _logger.Warn($"Only {len} byte(s) of data could be read from the stream."
                 );
             }
 
-            sendAsync(Opcode.Binary, new MemoryStream(bytes), completed);
+            return sendAsync(Opcode.Binary, new MemoryStream(bytes), completed);
         }
 
         /// <summary>
