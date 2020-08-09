@@ -86,6 +86,7 @@ namespace WebSocketSharp.NetCore
         private NetworkCredential _credentials;
         private bool _emitOnPing;
         private bool _enableRedirection;
+        private bool _enableStrictExceptions;
         private string _extensions;
         private bool _extensionsRequested;
         private object _forMessageEventQueue;
@@ -494,6 +495,56 @@ namespace WebSocketSharp.NetCore
                     }
 
                     _enableRedirection = value;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether the WebSocket client will
+        /// throw exceptions in general edge cases.
+        /// </summary>
+        /// <value>
+        ///   <para>
+        ///   <c>true</c> if this instance allows exceptions for
+        ///   already closed or already closing requests to throw
+        ///   an exception; otherwise, <c>false</c>.
+        ///   </para>
+        ///   <para>
+        ///   The default value is <c>false</c>.
+        ///   </para>
+        /// </value>
+        /// <exception cref="InvalidOperationException">
+        /// The set operation is not available if this instance is not a client.
+        /// </exception>
+        public bool EnableStrictExceptions
+        {
+            get => _enableStrictExceptions;
+
+            set
+            {
+                string msg = null;
+
+                if (!_client)
+                {
+                    msg = "This instance is not a client.";
+                    throw new InvalidOperationException(msg);
+                }
+
+                if (!canSet(out msg))
+                {
+                    _logger.Warn(msg);
+                    return;
+                }
+
+                lock (_forState)
+                {
+                    if (!canSet(out msg))
+                    {
+                        _logger.Warn(msg);
+                        return;
+                    }
+
+                    _enableStrictExceptions = value;
                 }
             }
         }
@@ -1131,16 +1182,15 @@ namespace WebSocketSharp.NetCore
 
         private void close(ushort code, string reason)
         {
-            if (_readyState == WebSocketState.Closing)
+            switch (_readyState)
             {
-                _logger.Info("The closing is already in progress.");
-                return;
-            }
-
-            if (_readyState == WebSocketState.Closed)
-            {
-                _logger.Info("The connection has already been closed.");
-                return;
+                case WebSocketState.Closing:
+                    _logger.Info("The closing is already in progress.");
+                    throw new WebSocketAlreadyClosingException();
+                    return;
+                case WebSocketState.Closed:
+                    _logger.Info("The connection has already been closed.");
+                    throw new WebSocketAlreadyClosedException();
             }
 
             if (code == 1005)
